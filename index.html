@@ -1,0 +1,79 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover" />
+  <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@300;400;500;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="styles.css" />
+  <title>Project ShockoLatte Converter</title>
+  <script type="importmap">
+  {
+    "imports": {
+      "dayjs": "https://esm.sh/dayjs"
+    }
+  }
+  </script>
+</head>
+<body>
+  <main id="app">
+    <div class="panel">
+      <header class="header">
+        <div class="title">Project ShockoLatte Converter</div>
+        <div class="meta">Quick, accurate conversions — lightweight and offline</div>
+      </header>
+
+      <div class="controls bento">
+        <div class="bento-row">
+          <div class="bento-section section-wide">
+            <div class="section-head">Category</div>
+            <div class="section-body top-row">
+              <div class="select-wrap">
+                <select id="category" aria-label="Category" class="control pill"></select>
+                <span class="arrow" aria-hidden="true">▾</span>
+              </div>
+              <button id="swap" title="Swap units" class="icon-btn" aria-label="Swap units">⟲</button>
+            </div>
+          </div>
+
+          <div class="bento-section section-actions">
+            <div class="section-head">Quik Action Row</div>
+            <div class="section-body actions">
+              <button id="copy" class="btn ghost">Copy</button>
+              <button id="swapValues" class="btn dark">Swap Values</button>
+              <button id="clear" class="btn">Clear</button>
+            </div>
+          </div>
+        </div>
+
+        <div class="bento-row split-row">
+          <div class="bento-section">
+            <div class="section-head">From Measurement</div>
+            <div class="section-body">
+              <div class="select-wrap">
+                <select id="fromUnit" class="control select-compact"></select>
+                <span class="arrow" aria-hidden="true">▾</span>
+              </div>
+              <input id="fromValue" class="control input big" inputmode="decimal" placeholder="Enter value" />
+            </div>
+          </div>
+
+          <div class="bento-section">
+            <div class="section-head">To Measurement</div>
+            <div class="section-body">
+              <div class="select-wrap">
+                <select id="toUnit" class="control select-compact"></select>
+                <span class="arrow" aria-hidden="true">▾</span>
+              </div>
+              <input id="toValue" class="control input big" readonly placeholder="Result" />
+            </div>
+          </div>
+        </div>
+
+        <div id="info" class="info" aria-live="polite"></div>
+      </div>
+    </div>
+  </main>
+
+  <script type="module" src="app.js"></script>
+</body>
+</html>

@@ -1,0 +1,304 @@
+:root{
+  --bg:#f4f7fb;
+  --card:#ffffff;
+  --muted:#6b7280;
+  --accent:#0b84ff;
+  --accent-2:#0f6abf;
+  --dark:#111827;
+  --radius:18px;
+  --gap:16px;
+  /* scale up base type slightly for a larger UI */
+  font-size:18px;
+  font-family: "Manrope", Inter, ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial;
+}
+
+*{box-sizing:border-box}
+html,body,#app{height:100%}
+body{
+  margin:0;
+  font-family: "Manrope", Inter, ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial;
+  background:linear-gradient(180deg, var(--bg), #ffffff);
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  -webkit-font-smoothing:antialiased;
+  -moz-osx-font-smoothing:grayscale;
+  padding:20px;
+}
+
+.panel{
+  width:100%;
+  max-width:920px;
+  background:var(--card);
+  padding:26px;
+  border-radius:calc(var(--radius) + 0px);
+  box-shadow:0 12px 36px rgba(16,24,40,0.07);
+  border:1px solid rgba(16,24,40,0.03);
+  overflow:hidden;
+}
+
+/* header */
+.header{padding:6px 4px 16px 4px}
+.title{font-weight:700;color:var(--dark);font-size:18px}
+.meta{font-size:12px;color:var(--muted);margin-top:4px}
+
+/* layout */
+.controls{display:flex;flex-direction:column;gap:14px}
+.top-row{display:flex;gap:12px;align-items:center}
+
+/* Make the top category select span the full width of the panel (across the two column cards).
+   The select wrapper becomes a flexible block so the native select fills available space,
+   while the swap icon button keeps its compact size to the right. */
+.top-row .select-wrap{
+  flex:1;
+  display:block;
+}
+
+/* keep the swap icon button compact and aligned */
+.top-row .icon-btn{
+  flex:0 0 auto;
+  align-self:center;
+  margin-left:8px;
+}
+.pill{padding:10px 14px;border-radius:999px}
+
+/* columns */
+.columns{display:flex;gap:12px}
+.card{flex:1;background:linear-gradient(180deg,#fff, #fbfdff);padding:12px;border-radius:12px;border:1px solid rgba(15,23,42,0.03);box-shadow:0 6px 18px rgba(14,20,30,0.02);display:flex;flex-direction:column;gap:8px}
+.label{font-size:12px;color:var(--muted);font-weight:600}
+
+/* controls */
+.control{
+  width:100%;
+  padding:14px 14px;
+  border-radius:12px;
+  border:1px solid rgba(15,23,42,0.06);
+  background:white;
+  font-size:17px;
+  font-family: inherit;
+  appearance:none;
+}
+
+/* Force native dropdowns, option lists, and buttons to use Manrope (with Inter fallback) */
+select, option, button, .btn, .icon-btn {
+  font-family: "Manrope", Inter, ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial;
+}
+
+/* custom select wrapper with animated arrow */
+.select-wrap{
+  position:relative;
+  display:inline-block;
+}
+.select-wrap .arrow{
+  position:absolute;
+  right:10px;
+  top:50%;
+  transform:translateY(-50%) translateX(0);
+  pointer-events:none;
+  font-size:14px;
+  color:var(--muted);
+  transition:transform 220ms cubic-bezier(.2,.9,.2,1), color 160ms ease;
+  transform-origin:50% 40%;
+  will-change:transform;
+}
+
+/* Jelly keyframes: small skew/scale oscillation */
+@keyframes jelly{
+  0%{ transform: translateY(-50%) translateX(0) rotate(0) scaleX(1) scaleY(1) }
+  30%{ transform: translateY(-50%) translateX(3px) rotate(-6deg) scaleX(1.08) scaleY(0.92) }
+  55%{ transform: translateY(-50%) translateX(-2px) rotate(4deg) scaleX(.96) scaleY(1.06) }
+  75%{ transform: translateY(-50%) translateX(1px) rotate(-2deg) scaleX(1.02) scaleY(.98) }
+  100%{ transform: translateY(-50%) translateX(0) rotate(0) scaleX(1) scaleY(1) }
+}
+
+/* trigger animation when the select is focused or wrapper is active (clicked) */
+.select-wrap:active .arrow,
+.select-wrap:focus-within .arrow{
+  color:var(--accent-2);
+  animation: jelly 420ms cubic-bezier(.2,.85,.2,1);
+}
+
+/* make room so native chevrons don't overlap on some browsers */
+.select-wrap select{
+  padding-right:38px;
+}
+
+.select-compact{padding:8px 10px}
+.input.big{padding:18px 14px;font-size:20px;border-radius:12px}
+
+/* buttons */
+.icon-btn{
+  background:transparent;
+  border:1px solid rgba(15,23,42,0.06);
+  padding:10px;
+  border-radius:10px;
+  font-size:18px;
+  min-width:48px;
+  cursor:pointer;
+  transition:transform 120ms ease, background 120ms ease;
+}
+.icon-btn:hover{background:rgba(11,132,255,0.06); transform:translateY(-2px)}
+
+/* actions and Duolingo-like button depth */
+.actions{display:flex;gap:10px;justify-content:space-between;margin-top:6px;align-items:center}
+
+/* Primary button: add lively gradient, layered shadows for depth, subtle inner shadow and press transform */
+.btn{
+  flex:1;
+  padding:12px 16px;
+  border-radius:14px;
+  border:0;
+  background: linear-gradient(180deg, var(--accent), var(--accent-2));
+  color:white;
+  font-weight:700;
+  min-height:56px;
+  cursor:pointer;
+  /* preserve original soft cast shadow, add a stronger colored rim and a subtle inner shadow for depth */
+  box-shadow:
+    0 12px 30px rgba(11,132,255,0.18),   /* soft ambient */
+    0 4px 0 rgba(6,82,170,0.08) inset,   /* faint inner rim */
+    0 8px 0 var(--accent-2);              /* solid colored rim (non-fading) */
+  transition: transform 120ms cubic-bezier(.2,.9,.2,1), box-shadow 120ms ease, filter 120ms ease;
+  will-change: transform, box-shadow;
+}
+
+/* hover lifts the button slightly and intensifies the drop shadow */
+.btn:hover{
+  transform: translateY(-4px);
+  box-shadow:
+    0 16px 34px rgba(11,132,255,0.22),
+    0 4px 0 rgba(6,82,170,0.06) inset,
+    0 8px 0 var(--accent-2); /* larger solid rim on hover */
+  filter:brightness(1.02);
+}
+
+/* active/pressed state — compress and deepen shadow */
+.btn:active{
+  transform: translateY(0) scale(0.994);
+  box-shadow:
+    0 6px 14px rgba(11,132,255,0.14),
+    0 2px 0 rgba(6,82,170,0.05) inset,
+    0 3px 0 var(--accent-2); /* reduced solid rim when pressed */
+}
+
+/* Dark variant keeps contrast but gains similar depth treatment */
+.btn.dark{
+  background: linear-gradient(180deg, #374151, #222428);
+  color:white;
+  box-shadow:
+    0 10px 24px rgba(0,0,0,0.16),
+    0 3px 0 rgba(0,0,0,0.06) inset,
+    0 6px 0 var(--dark); /* solid dark rim for strong non-fading depth */
+}
+.btn.dark:hover{ transform: translateY(-4px); box-shadow: 0 16px 34px rgba(0,0,0,0.2), 0 4px 0 rgba(0,0,0,0.06) inset, 0 8px 0 var(--dark) }
+.btn.dark:active{ transform: translateY(0) scale(0.994); box-shadow: 0 6px 14px rgba(0,0,0,0.12), 0 2px 0 rgba(0,0,0,0.04) inset, 0 3px 0 var(--dark) }
+
+/* Ghost variant retains subtle depth and accent color */
+.btn.ghost{
+  background: linear-gradient(180deg, rgba(255,255,255,0.9), rgba(255,255,255,0.95));
+  color:var(--accent-2);
+  border:1px solid rgba(15,23,42,0.06);
+  box-shadow:
+    0 8px 20px rgba(11,132,255,0.06),
+    0 6px 0 rgba(0,0,0,0.06); /* subtle darker (gray) rim instead of colored rim */
+}
+.btn.ghost:hover{ transform: translateY(-3px); box-shadow: 0 14px 28px rgba(11,132,255,0.08), 0 8px 0 rgba(0,0,0,0.06) }
+
+/* info */
+.info{margin-top:6px;color:var(--muted);font-size:13px;min-height:20px}
+
+/* Bento box UI layout */
+.bento{display:flex;flex-direction:column;gap:12px}
+.bento-row{display:flex;gap:12px}
+.bento-section{
+  flex:1;
+  background:linear-gradient(180deg,#fff,#fbfdff);
+  border-radius:12px;
+  border:1px solid rgba(15,23,42,0.04);
+  padding:10px;
+  display:flex;
+  flex-direction:column;
+  gap:8px;
+  box-shadow:0 6px 14px rgba(14,20,30,0.02);
+  min-width:0;
+}
+.bento-section.section-wide{flex:2;display:flex;flex-direction:column}
+.bento-section.section-actions{
+  /* keep the desktop "card" width but ensure contents stretch so buttons can match the adjacent select/input height */
+  flex:0 0 220px;
+  align-items:stretch;          /* allow buttons to be full-height/width inside */
+  justify-content:center;
+  padding:12px;
+}
+
+/* Ensure all action buttons inside the actions card take equal space and align uniformly.
+   Keep individual button styles (including box-shadows) intact but force consistent flex sizing. */
+.bento-section.section-actions .actions{
+  width:100%;
+  align-items:stretch;
+  justify-content:space-between;
+  gap:8px;
+}
+.bento-section.section-actions .actions .btn{
+  flex:1;
+  min-width:0;
+  box-sizing:border-box;
+}
+
+/* section header and body */
+.section-head{font-size:12px;color:var(--muted);font-weight:700; padding-bottom:4px; border-bottom:1px solid rgba(15,23,42,0.03)}
+.section-body{display:flex;gap:10px;align-items:center;padding-top:8px;min-height:48px}
+.split-row .bento-section .section-body{flex-direction:column;align-items:stretch}
+.split-row .bento-section .select-wrap{width:100%}
+.split-row .bento-section .input.big{margin-top:6px}
+
+/* visual separators between bento sections */
+.bento-row + .bento-row{margin-top:6px}
+
+/* smaller tweaks for the existing layouts used inside bento */
+.top-row{display:flex;gap:8px;align-items:center;flex:1}
+/* Actions inside the actions card: make every button share equal space and align with the adjacent controls */
+.actions{
+  display:flex;
+  gap:8px;
+  justify-content:flex-end;
+  width:100%;
+}
+.actions .btn{
+  flex:1;
+  min-width:0;      /* allow buttons to shrink evenly */
+  box-sizing:border-box;
+  /* ensure heights match across variants */
+  min-height:48px;
+}
+
+/* responsiveness */
+@media (max-width:720px){
+  /* Mobile: entirely different layout — stack sections, make actions prominent and full-width */
+  .bento-row{flex-direction:column}
+  .split-row{gap:12px}
+  .columns{flex-direction:column}
+
+  /* Put actions below the main inputs and make buttons full-width and larger for touch */
+  .bento-section.section-actions{
+    order: 3;
+    padding:14px;
+    align-items:stretch;
+  }
+  .actions{
+    flex-direction:column;
+    gap:12px;
+    justify-content:flex-start;
+    width:100%;
+  }
+  .actions .btn{
+    width:100%;
+    flex:none;
+    min-height:64px;
+    border-radius:14px;
+  }
+
+  /* compact spacing for inputs on mobile */
+  .btn{width:100%}
+  .panel{padding:18px}
+}
